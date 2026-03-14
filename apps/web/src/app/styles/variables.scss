@@ -1,1 +1,37 @@
-//variables
+:root {
+  /* layout */
+  --page-padding: 24px;
+  --page-padding-mobile: 16px;
+  --page-gap: 20px;
+
+  /* colors */
+  --color-bg-primary: #050816;
+  --color-surface-glass: linear-gradient(
+    180deg,
+    rgba(18, 26, 48, 0.82),
+    rgba(11, 16, 32, 0.78)
+  );
+  --color-surface-secondary: rgba(255, 255, 255, 0.03);
+
+  --color-text-primary: #f3f6ff;
+  --color-text-secondary: #a9b4d0;
+  --color-text-muted: #7f8aa3;
+
+  --color-accent-primary: #4da2ff;
+  --color-accent-secondary: #6366f1;
+  --color-accent-cyan: #22d3ee;
+
+  --color-border-primary: rgba(255, 255, 255, 0.08);
+
+  /* radius */
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+
+  /* shadow */
+  --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.32);
+
+  /* motion */
+  --transition-base: 0.2s ease;
+}

@@ -1,10 +1,165 @@
-.app {
-  min-height: 100vh;
-  padding: 32px;
+@use "@/app/styles/mixins" as *;
+
+.page {
+  box-sizing: border-box;
+  height: 100vh;
+  padding: var(--page-padding);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--page-gap);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(77, 162, 255, 0.18), transparent 35%),
+    radial-gradient(circle at right, rgba(99, 102, 241, 0.12), transparent 30%),
+    var(--color-bg-primary);
 }
 
-.title {
-  font-size: 40px;
+.main {
+  @include glass-card(
+    $bg: linear-gradient(180deg, rgba(18, 26, 48, 0.82), rgba(11, 16, 32, 0.78)),
+    $blur: 18px,
+    $radius: var(--radius-xl),
+    $border: rgba(255, 255, 255, 0.08),
+    $shadow: 0 20px 60px rgba(0, 0, 0, 0.32)
+  );
+
+  min-height: 0;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.header {
+  @include glass-card(
+    $bg: linear-gradient(180deg, rgba(18, 26, 48, 0.82), rgba(11, 16, 32, 0.78)),
+    $blur: 18px,
+    $radius: var(--radius-xl),
+    $border: rgba(255, 255, 255, 0.08),
+    $shadow: 0 20px 60px rgba(0, 0, 0, 0.32)
+  );
+
+  min-height: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brandIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  background:
+    linear-gradient(135deg, rgba(77, 162, 255, 0.28), rgba(99, 102, 241, 0.2)),
+    rgba(255, 255, 255, 0.03);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 24px rgba(77, 162, 255, 0.18);
+}
+
+.brandTitle {
+  font-size: 28px;
   line-height: 1.1;
   font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.urlInput {
+  flex: 1;
+  min-width: 0;
+  height: 60px;
+  padding: 0 20px;
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-secondary);
+  color: var(--color-text-primary);
+  outline: none;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    background-color var(--transition-base);
+
+  font-size: 20px;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &:focus {
+    border-color: rgba(77, 162, 255, 0.55);
+    box-shadow: 0 0 0 4px rgba(77, 162, 255, 0.12);
+  }
+}
+
+.analyzeButton {
+  @include glass-button($radius: 22px, $height: 60px, $border-width: 1px);
+
+  min-width: 168px;
+}
+
+.main {
+  padding: 24px;
+  overflow: hidden;
+}
+
+.mainInner {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 1px dashed rgba(125, 211, 252, 0.18);
+  border-radius: calc(var(--radius-xl) - 8px);
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(77, 162, 255, 0.06),
+      transparent 45%
+    ),
+    rgba(255, 255, 255, 0.01);
+  display: grid;
+  place-items: center;
+  color: var(--color-text-secondary);
+  font-size: 18px;
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: var(--page-padding-mobile);
+    gap: 16px;
+  }
+
+  .headerControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .analyzeButton {
+    width: 100%;
+  }
+
+  .brandTitle {
+    font-size: 22px;
+  }
+
+  .main {
+    padding: 16px;
+  }
 }
