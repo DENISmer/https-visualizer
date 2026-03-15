@@ -23,9 +23,29 @@
     $shadow: 0 20px 60px rgba(0, 0, 0, 0.32)
   );
 
+  position: relative;
   min-height: 0;
   padding: 24px;
   overflow: hidden;
+
+  background-image: url("../shared/ui/assets/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 38, 117, 0.22),
+    rgba(32, 57, 127, 0.16)
+  );
+  mix-blend-mode: screen;
+  backdrop-filter: blur(0.3px);
 }
 
 .header {
@@ -53,20 +73,8 @@
 .brand {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 14px;
-}
-
-.brandIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  border: 1px solid rgba(125, 211, 252, 0.35);
-  background:
-    linear-gradient(135deg, rgba(77, 162, 255, 0.28), rgba(99, 102, 241, 0.2)),
-    rgba(255, 255, 255, 0.03);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    0 0 24px rgba(77, 162, 255, 0.18);
 }
 
 .brandTitle {

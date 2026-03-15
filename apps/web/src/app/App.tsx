@@ -8,7 +8,8 @@ export const App = () => {
       <header className={styles.header}>
         <div className={styles.headerTop}>
           <div className={styles.brand}>
-            <div className={styles.brandIcon} />
+            <img src="/hexagon.svg" width={35} height={35} />
+
             <span className={styles.brandTitle}>HTTPS Request Visualizer</span>
           </div>
         </div>
@@ -19,9 +20,7 @@ export const App = () => {
       </header>
 
       <main className={styles.main}>
-        <div className={styles.mainInner}>
-          <StepsTimeline />
-        </div>
+        <StepsTimeline />
       </main>
     </div>
   );
