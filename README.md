@@ -34,3 +34,18 @@ The goal of this project is to help developers and learners better understand wh
 
 - pnpm workspaces
 
+## Development
+
+To run the project locally in development mode you need to start the backend and frontend separately.
+
+First start the backend API:
+
+```bash
+pnpm --filter api dev
+```
+
+Then start the frontend application:
+
+```bash
+pnpm --filter web dev
+```
