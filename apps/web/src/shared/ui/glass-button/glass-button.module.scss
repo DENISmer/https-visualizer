@@ -1,0 +1,239 @@
+.button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 168px;
+  min-height: 60px;
+  padding: 0 28px;
+  border: 1px solid rgba(146, 223, 255, 0.28);
+  border-radius: 22px;
+  background:
+    radial-gradient(
+      120% 160% at 22% 10%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.04) 22%,
+      rgba(255, 255, 255, 0) 42%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(24, 28, 62, 0.82) 0%,
+      rgba(42, 46, 108, 0.72) 34%,
+      rgba(66, 70, 168, 0.78) 72%,
+      rgba(98, 103, 255, 0.82) 100%
+    );
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 1px 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    filter 0.28s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+
+    background:
+      radial-gradient(
+        85% 140% at 58% 12%,
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(255, 255, 255, 0.08) 22%,
+        rgba(255, 255, 255, 0) 46%
+      ),
+      linear-gradient(
+        138deg,
+        rgba(40, 45, 118, 0.12) 0%,
+        rgba(86, 92, 255, 0.18) 40%,
+        rgba(130, 164, 255, 0.14) 58%,
+        rgba(255, 255, 255, 0.06) 66%,
+        rgba(255, 255, 255, 0) 78%
+      );
+
+    opacity: 0;
+    transition:
+      opacity 0.3s ease,
+      background 0.3s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    background:
+      radial-gradient(
+        85% 140% at 72% 12%,
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(255, 255, 255, 0.08) 22%,
+        rgba(255, 255, 255, 0) 46%
+      ),
+      linear-gradient(
+        138deg,
+        rgba(40, 45, 118, 0.12) 0%,
+        rgba(86, 92, 255, 0.18) 40%,
+        rgba(130, 164, 255, 0.14) 58%,
+        rgba(255, 255, 255, 0.06) 66%,
+        rgba(255, 255, 255, 0) 78%
+      );
+  }
+
+  &:hover {
+    border-color: rgba(146, 223, 255, 0.5);
+  }
+
+  &:hover .glowDotOne {
+    animation: orbit-one 0.3s ease forwards;
+  }
+
+  &:hover .glowDotTwo {
+    animation: orbit-two 0.3s ease forwards;
+  }
+
+  &:not(:hover) .glowDotOne {
+    animation: orbit-one-back 0.3s ease forwards;
+  }
+
+  &:not(:hover) .glowDotTwo {
+    animation: orbit-two-back 0.3s ease forwards;
+  }
+
+  &:active {
+    transform: scale(0.985);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: rgba(146, 223, 255, 0.62);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.glowDotOne,
+.glowDotTwo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 1;
+
+  width: 36px;
+  height: 3px;
+
+  offset-path: path(
+    "M 22 0 H 146 Q 168 0 168 22 V 38 Q 168 60 146 60 H 22 Q 0 60 0 38 V 22 Q 0 0 22 0 Z"
+  );
+  offset-rotate: 0deg;
+
+  background: radial-gradient(
+    ellipse 68% 100% at 50% 50%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.9) 22%,
+    rgba(255, 255, 255, 0.46) 52%,
+    rgba(255, 255, 255, 0.14) 74%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  box-shadow:
+    0 0 3px rgba(255, 255, 255, 0.95),
+    0 0 8px rgba(255, 255, 255, 0.55),
+    0 0 18px rgba(255, 255, 255, 0.24),
+    0 0 30px rgba(255, 255, 255, 0.1);
+
+  clip-path: polygon(
+    0% 50%,
+    8% 46%,
+    18% 36%,
+    32% 24%,
+    50% 18%,
+    68% 24%,
+    82% 36%,
+    92% 46%,
+    100% 50%,
+    92% 54%,
+    82% 64%,
+    68% 76%,
+    50% 82%,
+    32% 76%,
+    18% 64%,
+    8% 54%
+  );
+}
+
+.glowDotOne {
+  offset-distance: 14%;
+  transform: translateY(0.5px);
+}
+
+.glowDotTwo {
+  width: 36px;
+  offset-distance: 62%;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 3px rgba(255, 255, 255, 0.88),
+    0 0 7px rgba(255, 255, 255, 0.45),
+    0 0 16px rgba(255, 255, 255, 0.18),
+    0 0 26px rgba(255, 255, 255, 0.08);
+}
+
+.label {
+  position: relative;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes orbit-one {
+  from {
+    offset-distance: 14%;
+  }
+  to {
+    offset-distance: 24%;
+  }
+}
+
+@keyframes orbit-two {
+  from {
+    offset-distance: 62%;
+  }
+  to {
+    offset-distance: 72%;
+  }
+}
+
+@keyframes orbit-one-back {
+  from {
+    offset-distance: 24%;
+  }
+  to {
+    offset-distance: 14%;
+  }
+}
+
+@keyframes orbit-two-back {
+  from {
+    offset-distance: 72%;
+  }
+  to {
+    offset-distance: 62%;
+  }
+}

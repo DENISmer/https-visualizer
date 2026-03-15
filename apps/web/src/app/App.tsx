@@ -1,3 +1,4 @@
+import { GlassButton } from "@/shared/ui/glass-button";
 import styles from "./App.module.scss";
 
 export const App = () => {
@@ -17,9 +18,7 @@ export const App = () => {
             type="text"
             placeholder="https://example.com"
           />
-          <button className={styles.analyzeButton} type="button">
-            Analyze
-          </button>
+          <GlassButton className={styles.analyzeButton}>Analyze</GlassButton>
         </div>
       </header>
 
