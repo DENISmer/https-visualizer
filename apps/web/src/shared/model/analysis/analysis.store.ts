@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { connectAnalyzeStream } from "@/shared/api/analyze-stream";
 import type { AnalyzeStepEvent } from "@/shared/types/analyze";
+import { usePlaybackStore } from "@/shared/model/playback/playback.store";
 
 type AnalysisState = {
-  steps: AnalyzeStepEvent[];
   isRunning: boolean;
   error: string | null;
 
@@ -12,13 +12,15 @@ type AnalysisState = {
 };
 
 export const useAnalysisStore = create<AnalysisState>((set) => ({
-  steps: [],
   isRunning: false,
   error: null,
 
-  start: (url: string) => {
+  start: (url) => {
+    const playback = usePlaybackStore.getState();
+
+    playback.reset();
+
     set({
-      steps: [],
       isRunning: true,
       error: null,
     });
@@ -26,10 +28,11 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
     connectAnalyzeStream(
       url,
 
-      (event) => {
-        set((state) => ({
-          steps: [...state.steps, event],
-        }));
+      (event: AnalyzeStepEvent) => {
+        const playback = usePlaybackStore.getState();
+
+        playback.pushEvent(event);
+        playback.startPlayback();
       },
 
       () => {
@@ -48,8 +51,11 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
   },
 
   reset: () => {
+    const playback = usePlaybackStore.getState();
+
+    playback.reset();
+
     set({
-      steps: [],
       isRunning: false,
       error: null,
     });

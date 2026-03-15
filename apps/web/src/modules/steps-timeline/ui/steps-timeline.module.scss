@@ -1,0 +1,33 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(146, 223, 255, 0.9);
+  box-shadow: 0 0 12px rgba(146, 223, 255, 0.4);
+}
+
+.content {
+  min-width: 0;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}

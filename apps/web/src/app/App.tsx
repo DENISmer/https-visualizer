@@ -1,5 +1,6 @@
-import { GlassButton } from "@/shared/ui/glass-button";
 import styles from "./App.module.scss";
+import { StepsTimeline } from "@/modules/steps-timeline";
+import { RequestInput } from "@/modules/request-input";
 
 export const App = () => {
   return (
@@ -13,17 +14,14 @@ export const App = () => {
         </div>
 
         <div className={styles.headerControls}>
-          <input
-            className={styles.urlInput}
-            type="text"
-            placeholder="https://example.com"
-          />
-          <GlassButton className={styles.analyzeButton}>Analyze</GlassButton>
+          <RequestInput />
         </div>
       </header>
 
       <main className={styles.main}>
-        <div className={styles.mainInner}>Visualization scene</div>
+        <div className={styles.mainInner}>
+          <StepsTimeline />
+        </div>
       </main>
     </div>
   );
