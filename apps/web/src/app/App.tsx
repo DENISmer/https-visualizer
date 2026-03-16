@@ -1,6 +1,7 @@
 import styles from "./App.module.scss";
 import { StepsTimeline } from "@/modules/steps-timeline";
 import { RequestInput } from "@/modules/request-input";
+import { AnalyzeModeSwitcher } from "@/modules/analyze-mode-switcher";
 
 export const App = () => {
   return (
@@ -8,8 +9,7 @@ export const App = () => {
       <header className={styles.header}>
         <div className={styles.headerTop}>
           <div className={styles.brand}>
-            <img src="/hexagon.svg" width={35} height={35} />
-
+            <div className={styles.brandIcon} />
             <span className={styles.brandTitle}>HTTPS Request Visualizer</span>
           </div>
         </div>
@@ -20,7 +20,13 @@ export const App = () => {
       </header>
 
       <main className={styles.main}>
-        <StepsTimeline />
+        <div className={styles.mainContent}>
+          <StepsTimeline />
+        </div>
+
+        <div className={styles.mainBottomControls}>
+          <AnalyzeModeSwitcher />
+        </div>
       </main>
     </div>
   );

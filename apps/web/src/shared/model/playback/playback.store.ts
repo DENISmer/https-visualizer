@@ -4,21 +4,17 @@ import type { AnalyzeStepEvent } from "@/shared/types/analyze";
 type PlaybackState = {
   queue: AnalyzeStepEvent[];
   currentStep: AnalyzeStepEvent | null;
-
   isPlaying: boolean;
   isProcessing: boolean;
 
   pushEvent: (event: AnalyzeStepEvent) => void;
-  startPlayback: () => void;
+  startPlayback: () => Promise<void>;
   reset: () => void;
 };
-
-const STEP_DURATION = 800;
 
 export const usePlaybackStore = create<PlaybackState>((set, get) => ({
   queue: [],
   currentStep: null,
-
   isPlaying: false,
   isProcessing: false,
 
@@ -44,7 +40,7 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
         queue: state.queue.slice(1),
       }));
 
-      await new Promise((resolve) => setTimeout(resolve, STEP_DURATION));
+      await Promise.resolve();
     }
 
     set({

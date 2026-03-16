@@ -23,7 +23,6 @@
     $shadow: 0 20px 60px rgba(0, 0, 0, 0.32)
   );
 
-  position: relative;
   min-height: 0;
   padding: 24px;
   overflow: hidden;
@@ -32,6 +31,22 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContent {
+  flex: 1;
+  min-height: 0;
+}
+
+.mainBottomControls {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
 }
 
 .main::after {
@@ -169,5 +184,17 @@
 
   .main {
     padding: 16px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .mainBottomControls {
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    z-index: 20;
+    transform: translateX(-50%);
+    margin-top: 0;
+    padding-top: 0;
   }
 }
