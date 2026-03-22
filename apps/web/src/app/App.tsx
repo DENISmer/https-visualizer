@@ -2,6 +2,7 @@ import styles from "./App.module.scss";
 import { StepsTimeline } from "@/modules/steps-timeline";
 import { RequestInput } from "@/modules/request-input";
 import { AnalyzeModeSwitcher } from "@/modules/analyze-mode-switcher";
+import { AuthorsModal } from "@/modules/authors-modal/ui/authors-modal";
 
 export const App = () => {
   return (
@@ -13,13 +14,12 @@ export const App = () => {
         <header className={styles.header} aria-label="Site header">
           <div className={styles.headerTop}>
             <div className={styles.brand}>
-              <div className={styles.brandIcon} />
               <span className={styles.brandTitle}>
                 HTTPS Request Visualizer
               </span>
-              <span className={styles.brandTitle}>
-                HTTPS Request Visualizer
-              </span>
+              <div>
+                <AuthorsModal />
+              </div>
             </div>
           </div>
 
