@@ -1,7 +1,6 @@
 .root {
   display: flex;
   width: 100%;
-
   align-items: center;
   gap: 16px;
 }
@@ -11,17 +10,17 @@
   min-width: 0;
   height: 60px;
   padding: 0 20px;
-  border: 1px solid rgba(146, 223, 255, 0.18);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-secondary);
   color: var(--color-text-primary);
   outline: none;
 
   &::placeholder {
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
   }
 
   &:focus {
-    border-color: rgba(146, 223, 255, 0.4);
+    border-color: var(--color-accent-primary);
   }
 }

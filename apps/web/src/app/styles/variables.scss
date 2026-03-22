@@ -5,11 +5,10 @@
   --page-gap: 20px;
 
   /* colors */
-  --color-bg-primary: #050816;
-  --color-surface-glass: linear-gradient(
+  --color-bg-primary: linear-gradient(
     180deg,
-    rgba(18, 26, 48, 0.82),
-    rgba(11, 16, 32, 0.78)
+    rgba(28, 45, 249, 1) 5%,
+    rgba(0, 0, 0, 1) 71%
   );
   --color-surface-secondary: rgba(255, 255, 255, 0.03);
 
@@ -24,8 +23,8 @@
   --color-border-primary: rgba(255, 255, 255, 0.08);
 
   /* radius */
-  --radius-xl: 28px;
-  --radius-lg: 20px;
+  --radius-xl: 86px;
+  --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 12px;
 

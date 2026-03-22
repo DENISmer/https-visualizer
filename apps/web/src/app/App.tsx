@@ -6,28 +6,42 @@ import { AnalyzeModeSwitcher } from "@/modules/analyze-mode-switcher";
 export const App = () => {
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headerTop}>
-          <div className={styles.brand}>
-            <div className={styles.brandIcon} />
-            <span className={styles.brandTitle}>HTTPS Request Visualizer</span>
+      <a href="#main-content" className={styles.skipLink}>
+        Skip to main content
+      </a>
+      <div className={styles.visualizerContent}>
+        <header className={styles.header} aria-label="Site header">
+          <div className={styles.headerTop}>
+            <div className={styles.brand}>
+              <div className={styles.brandIcon} />
+              <span className={styles.brandTitle}>
+                HTTPS Request Visualizer
+              </span>
+              <span className={styles.brandTitle}>
+                HTTPS Request Visualizer
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div className={styles.headerControls}>
-          <RequestInput />
-        </div>
-      </header>
+          <div className={styles.headerControls}>
+            <RequestInput />
+          </div>
+        </header>
 
-      <main className={styles.main}>
-        <div className={styles.mainContent}>
-          <StepsTimeline />
-        </div>
+        <main
+          className={styles.main}
+          id="main-content"
+          aria-label="Request visualization"
+        >
+          <div className={styles.mainContent}>
+            <StepsTimeline />
+          </div>
 
-        <div className={styles.mainBottomControls}>
-          <AnalyzeModeSwitcher />
-        </div>
-      </main>
+          <div className={styles.mainBottomControls}>
+            <AnalyzeModeSwitcher />
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

@@ -17,8 +17,6 @@ export const GlassButton = ({
 
   return (
     <button className={buttonClassName} type={type} {...props}>
-      <span className={styles.glowDotOne} aria-hidden="true" />
-      <span className={styles.glowDotTwo} aria-hidden="true" />
       <span className={styles.label}>{children}</span>
     </button>
   );

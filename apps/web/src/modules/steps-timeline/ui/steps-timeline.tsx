@@ -42,10 +42,6 @@ export const StepsTimeline = () => {
                 <div className={styles.title}>{STEP_LABELS[step]}</div>
               </div>
             </div>
-
-            {index < PLAYBACK_STEPS.length - 1 && (
-              <div className={styles.connector} />
-            )}
           </div>
         );
       })}

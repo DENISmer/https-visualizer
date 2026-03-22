@@ -1,46 +1,25 @@
 .root {
-  display: flex;
-  align-items: center;
-  gap: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
   width: 100%;
 }
 
 .item {
-  display: flex;
-  align-items: center;
-  flex: 1;
   min-width: 0;
 }
 
 .step {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 0;
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
-  transition:
-    border-color 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    opacity 0.25s ease;
 }
 
-.connector {
-  flex-shrink: 0;
-  width: 28px;
-  height: 1px;
-  margin: 0 10px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.12),
-    rgba(146, 223, 255, 0.18)
-  );
-}
 
 .dot {
   width: 10px;
@@ -48,10 +27,6 @@
   flex-shrink: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.25);
-  transition:
-    background 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.25s ease;
 }
 
 .content {
@@ -70,61 +45,25 @@
 }
 
 .stepCompleted {
-  border-color: rgba(146, 223, 255, 0.14);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
 
   .dot {
     background: rgba(146, 223, 255, 0.75);
-    box-shadow: 0 0 10px rgba(146, 223, 255, 0.2);
   }
 }
 
 .stepActive {
-  border-color: rgba(146, 223, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.24);
   background: rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 0 0 1px rgba(146, 223, 255, 0.06),
-    0 0 24px rgba(146, 223, 255, 0.08);
-  transform: translateY(-2px);
 
   .dot {
     background: rgba(255, 255, 255, 1);
-    box-shadow:
-      0 0 12px rgba(255, 255, 255, 0.5),
-      0 0 24px rgba(146, 223, 255, 0.28);
-    transform: scale(1.15);
   }
 }
 
 @media (max-width: 1000px) {
   .root {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .item {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .connector {
-    width: 1px;
-    height: 20px;
-    margin: 10px auto 0;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.12),
-      rgba(146, 223, 255, 0.18)
-    );
-  }
-
-  .step {
-    width: 100%;
-  }
-
-  .stepActive {
-    transform: translateY(0);
+    grid-template-columns: 1fr;
   }
 }
