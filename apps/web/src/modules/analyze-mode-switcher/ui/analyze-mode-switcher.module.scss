@@ -1,4 +1,6 @@
 .root {
+  position: fixed;
+  bottom: 40px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -6,9 +8,29 @@
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
+
+  @media (max-width: 1000px) {
+    bottom: 20px;
+  }
+}
+
+.slider {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  height: 38px;
+  border-radius: 12px;
+  background: #1c2ef9;
+  transition:
+    transform 0.25s ease,
+    width 0.25s ease;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .button {
+  position: relative;
+  z-index: 1;
   height: 38px;
   padding: 0 14px;
   border-radius: 12px;
@@ -19,6 +41,4 @@
 
 .buttonActive {
   color: var(--color-text-primary);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
 }

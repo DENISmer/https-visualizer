@@ -21,8 +21,11 @@ export const RequestInput = () => {
         onChange={(event) => setUrl(event.target.value)}
         placeholder="https://example.com"
       />
-
-      <GlassButton onClick={handleAnalyze} disabled={isRunning}>
+      <GlassButton
+        className={styles.analyzeButton}
+        onClick={handleAnalyze}
+        disabled={isRunning}
+      >
         {isRunning ? "Analyzing..." : "Analyze"}
       </GlassButton>
     </div>
