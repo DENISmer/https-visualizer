@@ -56,7 +56,7 @@ export const AuthorsModal = () => {
 
               <div className={styles.content}>
                 {AUTHORS.map((item, index) => (
-                  <div className={styles.authorInfo}>
+                  <div key={item.name} className={styles.authorInfo}>
                     <div className={styles.authorInfo_title}>
                       <Icon size={54}>
                         <img src={authors_icon} />
@@ -68,7 +68,15 @@ export const AuthorsModal = () => {
                         </span>
                       </div>
                     </div>
-                    <PillLink href={item.telegram}>
+                    <PillLink
+                      style={
+                        window.visualViewport?.width &&
+                        window.visualViewport?.width < 1000
+                          ? { fontSize: "14px", maxWidth: "135px" }
+                          : {}
+                      }
+                      href={item.telegram}
+                    >
                       <Icon size={16}>
                         <img src={telegram_icon} alt="" />
                       </Icon>

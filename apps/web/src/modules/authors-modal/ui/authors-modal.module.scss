@@ -70,3 +70,20 @@
     }
   }
 }
+
+@media (max-width: 1000px) {
+  .modal {
+    padding: 15px;
+  }
+  .title {
+    &_name {
+      font-size: 20px;
+    }
+  }
+  .authorInfo {
+    column-gap: 21px;
+    &_name {
+      font-size: 12px;
+    }
+  }
+}
