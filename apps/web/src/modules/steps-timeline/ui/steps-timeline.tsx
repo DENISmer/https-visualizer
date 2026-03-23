@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { usePlaybackStore } from "@/shared/model/playback/playback.store";
 import { PLAYBACK_STEPS } from "@/shared/constants/playback-steps";
 import styles from "./steps-timeline.module.scss";
@@ -26,23 +27,35 @@ export const StepsTimeline = () => {
         const isActive = currentStep?.type === step;
         const isCompleted = currentIndex > index;
         const isUpcoming = currentIndex < index;
+        const isConnectorFilled = currentIndex > index;
 
         return (
-          <div key={step} className={styles.item}>
-            <div
-              className={[
-                styles.step,
-                isActive ? styles.stepActive : "",
-                isCompleted ? styles.stepCompleted : "",
-                isUpcoming ? styles.stepUpcoming : "",
-              ].join(" ")}
-            >
-              <div className={styles.dot} />
-              <div className={styles.content}>
-                <div className={styles.title}>{STEP_LABELS[step]}</div>
+          <Fragment key={step}>
+            <div className={styles.item}>
+              <div
+                className={[
+                  styles.step,
+                  isActive ? styles.stepActive : "",
+                  isCompleted ? styles.stepCompleted : "",
+                  isUpcoming ? styles.stepUpcoming : "",
+                ].join(" ")}
+              >
+                <div className={styles.dot} />
+                <div className={styles.content}>
+                  <div className={styles.title}>{STEP_LABELS[step]}</div>
+                </div>
               </div>
             </div>
-          </div>
+            {index < PLAYBACK_STEPS.length - 1 && (
+              <div className={styles.connector}>
+                <div className={styles.connectorTrack} />
+                <div
+                  className={styles.connectorFill}
+                  data-filled={isConnectorFilled ? "true" : "false"}
+                />
+              </div>
+            )}
+          </Fragment>
         );
       })}
     </div>

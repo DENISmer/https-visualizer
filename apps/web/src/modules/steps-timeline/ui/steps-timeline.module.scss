@@ -1,7 +1,7 @@
 .root {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(5, 1fr 24px) 1fr;
+  align-items: center;
   width: 100%;
 }
 
@@ -19,7 +19,6 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
 }
-
 
 .dot {
   width: 10px;
@@ -45,16 +44,19 @@
 }
 
 .stepCompleted {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: #1c2df9;
+  background: #1c1e36;
+
+  -webkit-box-shadow: inset 0px 0px 4px 0px #1c2df9;
+  box-shadow: inset 0px 0px 4px 0px #1c2df9;
 
   .dot {
-    background: rgba(146, 223, 255, 0.75);
+    background: rgba(146, 223, 255, 0.55);
   }
 }
 
 .stepActive {
-  border-color: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.53);
   background: rgba(255, 255, 255, 0.08);
 
   .dot {
@@ -62,8 +64,58 @@
   }
 }
 
+.connector {
+  position: relative;
+  height: 4px;
+  min-width: 24px;
+}
+
+.connectorTrack {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+
+.connectorFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: #1c2df9;
+  border-radius: 2px;
+  transition: width 0.35s ease;
+
+  &[data-filled="true"] {
+    width: 100%;
+  }
+}
+
 @media (max-width: 1000px) {
   .root {
     grid-template-columns: 1fr;
+  }
+
+  .connector {
+    width: 4px;
+    height: 20px;
+    min-width: unset;
+    margin: 0 auto;
+  }
+
+  .connectorTrack {
+    width: 100%;
+  }
+
+  .connectorFill {
+    width: 100% !important;
+    height: 0;
+    bottom: auto;
+    transition: height 0.35s ease;
+
+    &[data-filled="true"] {
+      height: 100%;
+    }
   }
 }
