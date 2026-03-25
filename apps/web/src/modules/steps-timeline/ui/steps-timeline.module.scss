@@ -1,23 +1,57 @@
+/* Logical column: children participate in parent grid (see display: contents). */
+.column {
+  display: contents;
+}
+
 .root {
   display: grid;
   grid-template-columns: repeat(5, 1fr 24px) 1fr;
-  align-items: center;
+  grid-template-rows: auto auto;
+  align-items: start;
+  row-gap: 10px;
   width: 100%;
 }
 
-.item {
+.stepCell {
   min-width: 0;
+  width: 100%;
+  display: flex;
+  align-self: center;
+}
+
+.detailsCell {
+  min-width: 0;
+  width: 100%;
+  align-self: start;
 }
 
 .step {
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
   padding: 22px 16px;
   border-radius: var(--radius-md);
   border: 0.7px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
+}
+
+.stepHead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.detailsToggle {
+  align-self: stretch;
+  width: max-content;
+  padding-block: 10px;
+  font-size: 14px;
 }
 
 .dot {
@@ -26,10 +60,6 @@
   flex-shrink: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.25);
-}
-
-.content {
-  min-width: 0;
 }
 
 .title {
@@ -68,6 +98,7 @@
   position: relative;
   height: 4px;
   min-width: 24px;
+  align-self: center;
 }
 
 .connectorTrack {
@@ -92,9 +123,64 @@
   }
 }
 
+@media (min-width: 1001px) {
+  .detailsToggle {
+    display: none !important;
+  }
+
+  .step {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .stepHead {
+    width: auto;
+    flex: 0 1 auto;
+  }
+
+  .detailsCell {
+    display: block;
+  }
+}
+
 @media (max-width: 1000px) {
   .root {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+
+    row-gap: 0;
+  }
+
+  .step {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 12px;
+  }
+
+  .column > .stepCell,
+  .column > .detailsCell,
+  .connector {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .stepCell {
+    align-self: stretch;
+  }
+
+  .detailsCell:not(.detailsCellOpenMobile) {
+    display: none;
+  }
+
+  .detailsCell.detailsCellOpenMobile {
+    display: block;
+    margin-bottom: 4px;
   }
 
   .connector {
@@ -102,6 +188,7 @@
     height: 20px;
     min-width: unset;
     margin: 0 auto;
+    align-self: center;
   }
 
   .connectorTrack {
