@@ -132,6 +132,11 @@
   .main {
     padding: 16px;
   }
+
+  .mainContent {
+    overflow-y: auto;
+    padding-bottom: 60px;
+  }
 }
 
 @media (max-width: 1000px) {
