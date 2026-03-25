@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { connectAnalyzeStream } from "@/shared/api/analyze-stream";
 import type { AnalyzeStepEvent } from "@/shared/types/analyze";
 import { usePlaybackStore } from "@/shared/model/playback/playback.store";
+import { useAlertsStore } from "@/shared/model/alerts/alerts.store";
 import {
   ANALYZE_MODES,
   type AnalyzeMode,
@@ -9,7 +10,6 @@ import {
 
 type AnalysisState = {
   isRunning: boolean;
-  error: string | null;
   mode: AnalyzeMode;
 
   setMode: (mode: AnalyzeMode) => void;
@@ -17,9 +17,15 @@ type AnalysisState = {
   reset: () => void;
 };
 
+const errorMessageFromPayload = (data: Record<string, unknown> | undefined) => {
+  const message = data?.message;
+  return typeof message === "string" && message.trim()
+    ? message.trim()
+    : "Something went wrong";
+};
+
 export const useAnalysisStore = create<AnalysisState>((set, get) => ({
   isRunning: false,
-  error: null,
   mode: ANALYZE_MODES.slowed,
 
   setMode: (mode) => {
@@ -34,13 +40,18 @@ export const useAnalysisStore = create<AnalysisState>((set, get) => ({
 
     set({
       isRunning: true,
-      error: null,
     });
 
     connectAnalyzeStream(
       url,
       mode,
       (event: AnalyzeStepEvent) => {
+        if (event.type === "error") {
+          useAlertsStore.getState().push(errorMessageFromPayload(event.data));
+          set({ isRunning: false });
+          return;
+        }
+
         const playbackState = usePlaybackStore.getState();
         playbackState.pushEvent(event);
         playbackState.startPlayback();
@@ -51,9 +62,9 @@ export const useAnalysisStore = create<AnalysisState>((set, get) => ({
         });
       },
       () => {
+        useAlertsStore.getState().push("Connection error");
         set({
           isRunning: false,
-          error: "Stream error",
         });
       },
     );
@@ -66,7 +77,6 @@ export const useAnalysisStore = create<AnalysisState>((set, get) => ({
 
     set({
       isRunning: false,
-      error: null,
     });
   },
 }));

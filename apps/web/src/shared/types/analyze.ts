@@ -5,6 +5,7 @@ export type AnalyzeStepType =
   | "tcp_connected"
   | "tls_established"
   | "http_response_received"
+  | "error"
   | "done";
 
 export type AnalyzeStepEvent = {

@@ -17,18 +17,26 @@ export const connectAnalyzeStream = (
 
   const eventSource = new EventSource(streamUrl);
 
+  let suppressTransportError = false;
+
   eventSource.addEventListener(SSE_EVENTS.step, (event) => {
     const payload: AnalyzeStepEvent = JSON.parse(event.data);
+    if (payload.type === "error") {
+      suppressTransportError = true;
+    }
     onStep(payload);
   });
 
   eventSource.addEventListener(SSE_EVENTS.done, () => {
+    suppressTransportError = true;
     onDone?.();
     eventSource.close();
   });
 
   eventSource.onerror = () => {
-    onError?.();
+    if (!suppressTransportError) {
+      onError?.();
+    }
     eventSource.close();
   };
 

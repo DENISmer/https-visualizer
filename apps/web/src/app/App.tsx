@@ -3,10 +3,12 @@ import { StepsTimeline } from "@/modules/steps-timeline";
 import { RequestInput } from "@/modules/request-input";
 import { AnalyzeModeSwitcher } from "@/modules/analyze-mode-switcher";
 import { AuthorsModal } from "@/modules/authors-modal/ui/authors-modal";
+import { ErrorAlertsStack } from "@/modules/error-alerts";
 
 export const App = () => {
   return (
     <div className={styles.page}>
+      <ErrorAlertsStack />
       <a href="#main-content" className={styles.skipLink}>
         Skip to main content
       </a>
