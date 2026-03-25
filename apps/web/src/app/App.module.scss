@@ -25,6 +25,14 @@
   grid-template-rows: 1fr;
   overflow: hidden;
   background: var(--color-bg-primary);
+  background-size: 300% 300%;
+
+  transition: background-position;
+
+  animation: backgroundInitializeAnimation 1.5s ease-in-out forwards;
+  -webkit-animation: backgroundInitializeAnimation 1.5s ease-in-out forwards;
+  -moz-animation: backgroundInitializeAnimation 1.5s ease-in-out forwards;
+  -o-animation: backgroundInitializeAnimation 1.5s ease-in-out forwards;
 }
 
 .visualizerContent {
@@ -135,5 +143,17 @@
     transform: translateX(-50%);
     margin-top: 0;
     padding-top: 0;
+  }
+}
+
+@keyframes backgroundInitializeAnimation {
+  0% {
+    background-position: 100% 90%;
+  }
+  50% {
+    background-position: 100% 87%;
+  }
+  100% {
+    background-position: 0% 52%;
   }
 }

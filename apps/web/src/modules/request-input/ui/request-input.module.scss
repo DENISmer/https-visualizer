@@ -1,12 +1,15 @@
 .root {
   display: flex;
-  width: 100%;
+  //width: 100%;
   align-items: center;
   height: 56px;
   padding: 6px 6px 6px 20px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.04);
+
+  animation: inputInitializeSlide 0.7s forwards ease-in-out;
+  transition: width;
 }
 
 .input {
@@ -45,5 +48,16 @@
 
   &:active:not(:disabled) {
     background: linear-gradient(180deg, #2563eb, #1d4ed8);
+  }
+}
+
+@keyframes inputInitializeSlide {
+  0% {
+    width: 10%;
+    opacity: 0.3;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
   }
 }
