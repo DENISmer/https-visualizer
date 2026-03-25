@@ -10,8 +10,8 @@
   z-index: 50;
   padding: 24px;
 
+  transition: backdrop-filter;
   animation: smoothBlur 2s forwards ease-out;
-  transform: backdrop-filter;
 }
 
 .modal {
@@ -23,8 +23,8 @@
   flex-direction: column;
   gap: 20px;
 
-  animation: scaleModal 0.4s forwards ease-out;
   transition: transform;
+  animation: scaleModal 0.4s forwards ease-out;
 }
 
 .title {
@@ -96,7 +96,7 @@
 
 @keyframes scaleModal {
   0% {
-    transform: translate(0%, -100%);
+    transform: translate(0%, -50%);
   }
   100% {
     transform: translate(0%, 0%);
