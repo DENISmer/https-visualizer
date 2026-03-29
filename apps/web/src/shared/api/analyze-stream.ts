@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_ROUTES } from "@/shared/constants/api";
+import { API_ROUTES, apiUrl } from "@/shared/api/client";
 import { SSE_EVENTS } from "@/shared/constants/sse";
 import type { AnalyzeStepEvent } from "@/shared/types/analyze";
 import type { AnalyzeMode } from "@/shared/constants/analyze-mode";
@@ -11,7 +11,7 @@ export const connectAnalyzeStream = (
   onError?: () => void,
 ) => {
   const streamUrl =
-    `${API_BASE_URL}${API_ROUTES.analyzeStream}?url=` +
+    `${apiUrl(API_ROUTES.analyzeStream)}?url=` +
     encodeURIComponent(url) +
     `&mode=${encodeURIComponent(mode)}`;
 

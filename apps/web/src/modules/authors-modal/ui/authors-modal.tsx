@@ -5,7 +5,7 @@ import styles from "./authors-modal.module.scss";
 import { Icon } from "@/shared/ui/icon";
 import { FALLBACK_AUTHORS, type Author } from "@/shared/constants/authors";
 import authors_icon from "@/shared/ui/icons/authorsIcon.svg";
-import { API_BASE_URL, API_ROUTES } from "@/shared/constants/api";
+import { API_ROUTES, apiGet } from "@/shared/api/client";
 import close_icon from "@/shared/ui/icons/close_icon.svg";
 import telegram_icon from "@/shared/ui/icons/telegram_icon.svg";
 import { PillLink } from "@/shared/ui/pill-link";
@@ -19,9 +19,7 @@ export const AuthorsModal = () => {
 
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}${API_ROUTES.authors}`);
-        if (!res.ok) throw new Error(String(res.status));
-        const data: unknown = await res.json();
+        const data = await apiGet<unknown>(API_ROUTES.authors);
         if (!Array.isArray(data)) throw new Error("Invalid authors payload");
         const parsed = data as Author[];
         if (!cancelled) {
