@@ -51,6 +51,25 @@
   }
 }
 
+@media (max-width: 1000px) {
+  .root {
+    height: max-content;
+  }
+  .analyzeButton {
+    min-width: 9px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    padding: 10px;
+    min-height: 20px;
+  }
+
+  .input {
+    height: 20px;
+  }
+}
+
 @keyframes inputInitializeSlide {
   0% {
     width: 10%;

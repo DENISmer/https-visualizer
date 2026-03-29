@@ -20,4 +20,10 @@ body {
     "Segoe UI",
     sans-serif;
   background-color: black;
+
+  scrollbar-color: blue black;
+  &::-webkit-scrollbar-thumb {
+    border-radius: px;
+  }
+  scrollbar-width: auto;
 }

@@ -14,15 +14,9 @@ export const AuthorsModal = () => {
 
   return (
     <>
-      <GlassButton onClick={() => setIsOpen(true)}>
+      <GlassButton className={styles.triggerButton} onClick={() => setIsOpen(true)}>
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            fontSize: "20px",
-            fontWeight: 400,
-            columnGap: "8px",
-          }}
+          className={styles.triggerButton}
         >
           <Icon size={20}>
             <img src={authors_icon} sizes="23px 20px" alt="" />
