@@ -2,22 +2,20 @@ import { API_ROUTES } from "@/shared/constants/api";
 
 export { API_ROUTES };
 
-/** Normalized API origin (no trailing slash). */
+/**
+ * API origin for fetch. Default: same origin, paths like `/api/...` (nginx proxies `/api` → Fastify).
+ * Optional override: `VITE_API_BASE_URL` when UI and API are on different hosts (e.g. GitHub Pages).
+ */
 export const getApiBaseUrl = (): string => {
   const raw = import.meta.env.VITE_API_BASE_URL?.trim();
-  if (!raw) {
-    throw new Error(
-      "VITE_API_BASE_URL is not set. Add apps/web/.env.development or .env.production (see .env.example).",
-    );
-  }
-  return raw.replace(/\/$/, "");
+  return raw ? raw.replace(/\/$/, "") : "";
 };
 
-/** Full URL for an API path (path must start with /). */
+/** Absolute or same-origin path for an API request (path should start with `/`, e.g. `/api/health`). */
 export const apiUrl = (path: string): string => {
   const base = getApiBaseUrl();
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  return `${base}${normalized}`;
+  return base ? `${base}${normalized}` : normalized;
 };
 
 export class ApiHttpError extends Error {
