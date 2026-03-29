@@ -1,23 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { GlassButton } from "@/shared/ui/glass-button";
 import styles from "./authors-modal.module.scss";
 import { Icon } from "@/shared/ui/icon";
-import { AUTHORS } from "@/shared/constants/authors";
+import { FALLBACK_AUTHORS, type Author } from "@/shared/constants/authors";
 import authors_icon from "@/shared/ui/icons/authorsIcon.svg";
+import { API_ROUTES, apiGet } from "@/shared/api/client";
 import close_icon from "@/shared/ui/icons/close_icon.svg";
 import telegram_icon from "@/shared/ui/icons/telegram_icon.svg";
 import { PillLink } from "@/shared/ui/pill-link";
 
 export const AuthorsModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [authors, setAuthors] = useState<Author[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      try {
+        const data = await apiGet<unknown>(API_ROUTES.authors);
+        if (!Array.isArray(data)) throw new Error("Invalid authors payload");
+        const parsed = data as Author[];
+        if (!cancelled) {
+          setAuthors(parsed.length > 0 ? parsed : FALLBACK_AUTHORS);
+        }
+      } catch {
+        if (!cancelled) setAuthors(FALLBACK_AUTHORS);
+      }
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const list = authors ?? FALLBACK_AUTHORS;
 
   return (
     <>
-      <GlassButton className={styles.triggerButton} onClick={() => setIsOpen(true)}>
-        <div
-          className={styles.triggerButton}
-        >
+      <GlassButton
+        className={styles.triggerButton}
+        onClick={() => setIsOpen(true)}
+      >
+        <div className={styles.triggerButton}>
           <Icon size={20}>
             <img src={authors_icon} sizes="23px 20px" alt="" />
           </Icon>
@@ -49,11 +76,11 @@ export const AuthorsModal = () => {
               </h2>
 
               <div className={styles.content}>
-                {AUTHORS.map((item, index) => (
-                  <div key={item.name} className={styles.authorInfo}>
+                {list.map((item) => (
+                  <div key={item.id ?? item.name} className={styles.authorInfo}>
                     <div className={styles.authorInfo_title}>
                       <Icon size={54}>
-                        <img src={authors_icon} />
+                        <img src={item.avatarUrl || authors_icon} alt="" />
                       </Icon>{" "}
                       <div className={styles.authorInfo_name}>
                         <span>{item.name}</span>

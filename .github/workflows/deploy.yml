@@ -1,0 +1,76 @@
+# Deploy static web + refresh API on your VPS (SSH).
+#
+# GitHub → Settings → Secrets and variables → Actions:
+#   SSH_HOST               server hostname or IP
+#   SSH_USER               e.g. ubuntu
+#   SSH_PRIVATE_KEY        full PEM (incl. -----BEGIN ... END-----)
+#   WEB_DEPLOY_PATH        e.g. /var/www/httpsvisualizer (must be writable by SSH_USER; use sudo chown if needed)
+#   APP_DIR                absolute path to this repo on the server (git clone once + deploy key to GitHub)
+#   SYSTEMD_SERVICE        e.g. https-visualizer-api (unit file without .service)
+#
+# Server: Node 20+, git, pnpm via corepack, `sudo systemctl` without password for that unit (sudoers), nginx already serves WEB_DEPLOY_PATH.
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build web
+        run: pnpm --filter web build
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Rsync web dist
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          WEB_DEPLOY_PATH: ${{ secrets.WEB_DEPLOY_PATH }}
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+            apps/web/dist/ \
+            "${SSH_USER}@${SSH_HOST}:${WEB_DEPLOY_PATH}/"
+
+      - name: Pull repo and restart API
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          ssh -i "$HOME/.ssh/deploy_key" -o StrictHostKeyChecking=yes \
+            "${SSH_USER}@${SSH_HOST}" \
+            "set -euo pipefail; cd '${{ secrets.APP_DIR }}'; git fetch origin main; git reset --hard origin/main; corepack enable; corepack prepare pnpm@10.32.1 --activate; pnpm install --frozen-lockfile; sudo systemctl restart '${{ secrets.SYSTEMD_SERVICE }}'"
