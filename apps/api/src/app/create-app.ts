@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { registerHealthRoute } from "@/routes/health.route";
+import { registerAuthorsRoute } from "@/routes/authors.route";
 import { registerAnalyzeStreamRoute } from "@/routes/analyze-stream.route";
 
 export const createApp = async () => {
@@ -13,6 +14,7 @@ export const createApp = async () => {
   });
 
   registerHealthRoute(app);
+  registerAuthorsRoute(app);
   registerAnalyzeStreamRoute(app);
 
   return app;
