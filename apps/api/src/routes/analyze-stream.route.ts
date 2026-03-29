@@ -15,6 +15,7 @@ import {
   AnalyzeError,
 } from "@/lib/https-analyze";
 import { AnalyzeAddressError } from "@/lib/is-public-ip";
+import { extractHostnameForLog, logAnalyzeOutcome } from "@/lib/request-log";
 
 type StepEvent = {
   type: string;
@@ -34,6 +35,15 @@ const withMs = (data: Record<string, unknown>, ms: number) => ({
 
 export const registerAnalyzeStreamRoute = (app: FastifyInstance) => {
   app.get("/api/analyze/stream", async (request, reply) => {
+    const logOutcome = (ok: boolean, domain: string) => {
+      void logAnalyzeOutcome({
+        requestId: request.id,
+        ok,
+        domain,
+      }).catch((err) => {
+        app.log.warn({ err }, "request_logs insert failed");
+      });
+    };
     const { url: urlParam, mode } = request.query as {
       url?: string;
       mode?: AnalyzeMode;
@@ -67,6 +77,8 @@ export const registerAnalyzeStreamRoute = (app: FastifyInstance) => {
       }
     };
 
+    let hostnameForLog: string | undefined;
+
     try {
       if (!urlParam?.trim()) {
         throw new AnalyzeError("URL is required");
@@ -85,6 +97,7 @@ export const registerAnalyzeStreamRoute = (app: FastifyInstance) => {
         connected.startedAt,
       );
       const { url } = urlParsed;
+      hostnameForLog = url.hostname;
       writeSseEvent(reply, "step", {
         type: "url_parsed",
         data: withMs(urlParsed.data, urlParsed.ms),
@@ -155,6 +168,8 @@ export const registerAnalyzeStreamRoute = (app: FastifyInstance) => {
         data: {},
       });
 
+      logOutcome(true, url.hostname);
+
       await sleep(timings.done);
     } catch (e) {
       cleanupSockets();
@@ -170,6 +185,8 @@ export const registerAnalyzeStreamRoute = (app: FastifyInstance) => {
         type: "error",
         data: { message, ms: 0 },
       });
+
+      logOutcome(false, hostnameForLog ?? extractHostnameForLog(urlParam));
     } finally {
       reply.raw.end();
     }
