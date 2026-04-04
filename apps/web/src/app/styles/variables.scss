@@ -5,9 +5,18 @@
   --page-gap: 20px;
 
   /* colors */
+  --color-gradient-top: rgba(28, 45, 249, 1);
+  --color-status-bar-blue-share: 80%;
+
+  --color-status-bar: color-mix(
+    in srgb,
+    var(--color-gradient-top) var(--color-status-bar-blue-share),
+    black
+  );
+
   --color-bg-primary: linear-gradient(
     180deg,
-    rgba(28, 45, 249, 1) 15%,
+    var(--color-gradient-top) 15%,
     rgba(0, 0, 0, 1) 71%
   );
 
