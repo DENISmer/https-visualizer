@@ -50,10 +50,26 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          install -m 700 -d ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          set -euo pipefail
+          if [ -z "${SSH_PRIVATE_KEY:-}" ] || [ -z "${SSH_HOST:-}" ]; then
+            echo "::error::Set repository secrets SSH_PRIVATE_KEY and SSH_HOST (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+          if [[ "$SSH_PRIVATE_KEY" != *BEGIN*PRIVATE*KEY* ]]; then
+            echo "::error::SSH_PRIVATE_KEY must be the full key text (must contain BEGIN … PRIVATE KEY … END)."
+            exit 1
+          fi
+          SSH_HOST="${SSH_HOST#https://}"
+          SSH_HOST="${SSH_HOST#http://}"
+          SSH_HOST="${SSH_HOST%%/*}"
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          if ! ssh-keyscan -T 30 -H "$SSH_HOST" >> "$HOME/.ssh/known_hosts" 2>&1; then
+            echo "::error::ssh-keyscan failed for \"$SSH_HOST\". Use hostname or IP only (no https://, no path)."
+            exit 1
+          fi
 
       - name: Rsync web dist
         env:
@@ -73,4 +89,4 @@ jobs:
         run: |
           ssh -i "$HOME/.ssh/deploy_key" -o StrictHostKeyChecking=yes \
             "${SSH_USER}@${SSH_HOST}" \
-            "set -euo pipefail; cd '${{ secrets.APP_DIR }}'; git fetch origin main; git reset --hard origin/main; corepack enable; corepack prepare pnpm@10.32.1 --activate; pnpm install --frozen-lockfile; sudo systemctl restart '${{ secrets.SYSTEMD_SERVICE }}'"
+            "bash -lc 'set -euo pipefail; cd \"${{ secrets.APP_DIR }}\"; git fetch origin main; git reset --hard origin/main; corepack enable; corepack prepare pnpm@10.32.1 --activate; pnpm install --frozen-lockfile; sudo systemctl restart \"${{ secrets.SYSTEMD_SERVICE }}\"'"
