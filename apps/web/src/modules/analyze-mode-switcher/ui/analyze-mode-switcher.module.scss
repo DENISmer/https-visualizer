@@ -1,3 +1,5 @@
+@use "@/app/styles/mixins" as *;
+
 .root {
   position: fixed;
   bottom: calc(40px + env(safe-area-inset-bottom, 0px));
@@ -7,8 +9,7 @@
   padding: 6px;
   border-radius: 16px;
   background: rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  @include backdrop-blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.12);
 
   @media (max-width: 1000px) {
