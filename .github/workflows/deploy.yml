@@ -87,6 +87,7 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
         run: |
+          # Remote: non-interactive SSH does not load nvm from .bashrc; source nvm.sh so node/corepack exist on PATH.
           ssh -i "$HOME/.ssh/deploy_key" -o StrictHostKeyChecking=yes \
             "${SSH_USER}@${SSH_HOST}" \
-            "bash -lc 'set -euo pipefail; cd \"${{ secrets.APP_DIR }}\"; git fetch origin main; git reset --hard origin/main; corepack enable; corepack prepare pnpm@10.32.1 --activate; pnpm install --frozen-lockfile; sudo systemctl restart \"${{ secrets.SYSTEMD_SERVICE }}\"'"
+            "cd '${{ secrets.APP_DIR }}' && export NVM_DIR=\"\$HOME/.nvm\" && [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" && set -euo pipefail && git fetch origin main && git reset --hard origin/main && corepack enable && corepack prepare pnpm@10.32.1 --activate && pnpm install --frozen-lockfile && sudo systemctl restart '${{ secrets.SYSTEMD_SERVICE }}'"
