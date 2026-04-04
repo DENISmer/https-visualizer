@@ -1,11 +1,12 @@
 import type { FastifyInstance } from "fastify";
 import { getSupabase } from "@/lib/supabase";
+import { pickAuthorLinks, type AuthorLinksDto } from "@/lib/author-links";
 
 export type AuthorDto = {
   id: string;
   name: string;
   role: string;
-  telegram: string;
+  links: AuthorLinksDto;
   avatarUrl: string | null;
 };
 
@@ -18,7 +19,7 @@ export const registerAuthorsRoute = (app: FastifyInstance) => {
 
     const { data, error } = await supabase
       .from("authors")
-      .select("id, name, role, telegram, avatar_url")
+      .select("id, name, role, links, telegram, avatar_url")
       .order("sort_order", { ascending: true });
 
     if (error) {
@@ -30,7 +31,7 @@ export const registerAuthorsRoute = (app: FastifyInstance) => {
       id: row.id,
       name: row.name,
       role: row.role,
-      telegram: row.telegram,
+      links: pickAuthorLinks(row.links, row.telegram),
       avatarUrl: row.avatar_url,
     }));
 

@@ -9,9 +9,6 @@ export const App = () => {
   return (
     <div className={styles.page}>
       <ErrorAlertsStack />
-      <a href="#main-content" className={styles.skipLink}>
-        Skip to main content
-      </a>
       <div className={styles.visualizerContent}>
         <header className={styles.header} aria-label="Site header">
           <div className={styles.headerTop}>

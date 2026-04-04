@@ -37,4 +37,9 @@
 
   /* motion */
   --transition-base: 0.2s ease;
+
+  /* scrollbars (Firefox + standard; WebKit needs separate rules in mixin) */
+  --scrollbar-thumb: rgba(77, 162, 255, 0.5);
+  --scrollbar-thumb-hover: rgba(77, 162, 255, 0.82);
+  --scrollbar-track: rgba(5, 8, 22, 0.65);
 }

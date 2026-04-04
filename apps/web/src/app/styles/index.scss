@@ -1,10 +1,15 @@
 @use "./reset";
 @use "./variables";
+@use "./mixins" as *;
 
 html,
 body,
 #root {
   height: 100%;
+}
+
+html {
+  @include custom-scrollbar;
 }
 
 body {
@@ -21,9 +26,5 @@ body {
     sans-serif;
   background-color: black;
 
-  scrollbar-color: blue black;
-  &::-webkit-scrollbar-thumb {
-    border-radius: px;
-  }
-  scrollbar-width: auto;
+  @include custom-scrollbar;
 }
