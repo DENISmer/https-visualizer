@@ -63,6 +63,10 @@ export const AuthorsModal = () => {
             aria-modal="true"
             aria-label="Authors"
           >
+            <div className={styles.backdropLayers} aria-hidden>
+              <div className={styles.backdropGlass} />
+              <div className={styles.backdropTint} />
+            </div>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
               <h2 className={styles.title}>
                 <div className={styles.title_name}>

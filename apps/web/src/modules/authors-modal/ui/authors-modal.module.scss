@@ -1,20 +1,37 @@
+@use "@/app/styles/mixins" as *;
+
 .backdrop {
   position: fixed;
   inset: 0;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
-  /* Static blur: keyframe animations on backdrop-filter are unreliable in Chrome/Firefox (Safari is more forgiving). */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 50;
   padding: 24px;
+}
 
+.backdropLayers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.backdropGlass {
+  position: absolute;
+  inset: 0;
+  @include backdrop-blur(8px);
+}
+
+.backdropTint {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   animation: backdropFadeIn 0.25s ease-out forwards;
 }
 
 .modal {
+  position: relative;
+  z-index: 1;
   padding: 20px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.12);

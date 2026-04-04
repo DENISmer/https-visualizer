@@ -20,6 +20,18 @@
   );
 }
 
+@mixin backdrop-blur($size: 8px, $gpu-hack: true) {
+  @if $gpu-hack {
+    transform: translateZ(0);
+  }
+
+  backdrop-filter: blur($size);
+
+  @supports not (backdrop-filter: blur(0.01px)) {
+    -webkit-backdrop-filter: blur($size);
+  }
+}
+
 /**
  * WebKit only applies ::-webkit-scrollbar* to the element that scrolls.
  */
