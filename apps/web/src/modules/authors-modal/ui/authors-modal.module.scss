@@ -5,13 +5,13 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
+  /* Static blur: keyframe animations on backdrop-filter are unreliable in Chrome/Firefox (Safari is more forgiving). */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 50;
   padding: 24px;
 
-  transition: backdrop-filter;
-  animation: smoothBlur 2s forwards ease-out;
+  animation: backdropFadeIn 0.25s ease-out forwards;
 }
 
 .modal {
@@ -66,6 +66,16 @@
   column-gap: 91px;
 
   padding: 16px 5px 16px 0px;
+
+  .authorLinks {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+    max-width: min(220px, 100%);
+  }
 
   &_title {
     display: flex;
@@ -127,13 +137,11 @@
   }
 }
 
-@keyframes smoothBlur {
-  0% {
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
   }
-  100% {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+  to {
+    opacity: 1;
   }
 }

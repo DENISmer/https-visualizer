@@ -19,7 +19,7 @@ export const RequestInput = () => {
         className={styles.input}
         value={url}
         onChange={(event) => setUrl(event.target.value)}
-        placeholder="https://example.com"
+        placeholder="https://google.com"
       />
       <GlassButton
         className={styles.analyzeButton}

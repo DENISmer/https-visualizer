@@ -3,12 +3,15 @@ import { createPortal } from "react-dom";
 import { GlassButton } from "@/shared/ui/glass-button";
 import styles from "./authors-modal.module.scss";
 import { Icon } from "@/shared/ui/icon";
-import { FALLBACK_AUTHORS, type Author } from "@/shared/constants/authors";
+import {
+  FALLBACK_AUTHORS,
+  parseAuthorsFromApiPayload,
+  type Author,
+} from "@/shared/constants/authors";
 import authors_icon from "@/shared/ui/icons/authorsIcon.svg";
 import { API_ROUTES, apiGet } from "@/shared/api/client";
 import close_icon from "@/shared/ui/icons/close_icon.svg";
-import telegram_icon from "@/shared/ui/icons/telegram_icon.svg";
-import { PillLink } from "@/shared/ui/pill-link";
+import { AuthorSocialLinks } from "@/modules/authors-modal/ui/author-social-links";
 
 export const AuthorsModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,8 +23,7 @@ export const AuthorsModal = () => {
     const load = async () => {
       try {
         const data = await apiGet<unknown>(API_ROUTES.authors);
-        if (!Array.isArray(data)) throw new Error("Invalid authors payload");
-        const parsed = data as Author[];
+        const parsed = parseAuthorsFromApiPayload(data);
         if (!cancelled) {
           setAuthors(parsed.length > 0 ? parsed : FALLBACK_AUTHORS);
         }
@@ -89,20 +91,7 @@ export const AuthorsModal = () => {
                         </span>
                       </div>
                     </div>
-                    <PillLink
-                      style={
-                        window.visualViewport?.width &&
-                        window.visualViewport?.width < 1000
-                          ? { fontSize: "14px", maxWidth: "135px" }
-                          : {}
-                      }
-                      href={item.telegram}
-                    >
-                      <Icon size={16}>
-                        <img src={telegram_icon} alt="" />
-                      </Icon>
-                      <span>Telegram</span>
-                    </PillLink>
+                    <AuthorSocialLinks links={item.links} />
                   </div>
                 ))}
               </div>

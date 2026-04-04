@@ -1,5 +1,6 @@
 @use "./reset";
 @use "./variables";
+@use "./mixins" as *;
 
 html,
 body,
@@ -7,9 +8,14 @@ body,
   height: 100%;
 }
 
+html {
+  @include custom-scrollbar;
+}
+
 body {
   margin: 0;
   overflow: hidden;
+  background-color: var(--color-status-bar);
   color: var(--color-text-primary);
   font-family:
     Inter,
@@ -19,11 +25,6 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  background-color: black;
 
-  scrollbar-color: blue black;
-  &::-webkit-scrollbar-thumb {
-    border-radius: px;
-  }
-  scrollbar-width: auto;
+  @include custom-scrollbar;
 }

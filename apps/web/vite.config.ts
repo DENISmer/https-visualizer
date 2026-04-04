@@ -10,6 +10,8 @@ export default defineConfig({
     },
   },
   server: {
+    // Listen on LAN (0.0.0.0) so you can open the dev server from a phone: http://192.168.x.x:5173
+    host: true,
     proxy: {
       "/api": {
         target: "http://127.0.0.1:3001",
@@ -18,6 +20,7 @@ export default defineConfig({
     },
   },
   preview: {
+    host: true,
     proxy: {
       "/api": {
         target: "http://127.0.0.1:3001",

@@ -5,9 +5,18 @@
   --page-gap: 20px;
 
   /* colors */
+  --color-gradient-top: rgba(28, 45, 249, 1);
+  --color-status-bar-blue-share: 80%;
+
+  --color-status-bar: color-mix(
+    in srgb,
+    var(--color-gradient-top) var(--color-status-bar-blue-share),
+    black
+  );
+
   --color-bg-primary: linear-gradient(
     180deg,
-    rgba(28, 45, 249, 1) 15%,
+    var(--color-gradient-top) 15%,
     rgba(0, 0, 0, 1) 71%
   );
 
@@ -37,4 +46,9 @@
 
   /* motion */
   --transition-base: 0.2s ease;
+
+  /* scrollbars (Firefox + standard; WebKit needs separate rules in mixin) */
+  --scrollbar-thumb: rgba(77, 162, 255, 0.5);
+  --scrollbar-thumb-hover: rgba(77, 162, 255, 0.82);
+  --scrollbar-track: rgba(5, 8, 22, 0.65);
 }
