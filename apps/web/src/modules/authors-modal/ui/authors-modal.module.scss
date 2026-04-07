@@ -126,6 +126,10 @@
     &_name {
       font-size: 12px;
     }
+    img {
+      max-width: 54px;
+      min-width: 20px;
+    }
   }
   .triggerButton {
     display: flex;

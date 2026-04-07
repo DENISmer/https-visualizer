@@ -86,7 +86,11 @@ export const AuthorsModal = () => {
                   <div key={item.id ?? item.name} className={styles.authorInfo}>
                     <div className={styles.authorInfo_title}>
                       <Icon size={54}>
-                        <img src={item.avatarUrl || authors_icon} alt="" />
+                        {item.avatarUrl ? (
+                          <img src={item.avatarUrl} width={54} alt="" />
+                        ) : (
+                          <img src={authors_icon} width={24} alt="" />
+                        )}
                       </Icon>{" "}
                       <div className={styles.authorInfo_name}>
                         <span>{item.name}</span>
