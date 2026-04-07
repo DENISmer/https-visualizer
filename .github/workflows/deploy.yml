@@ -78,9 +78,10 @@ jobs:
           WEB_DEPLOY_PATH: ${{ secrets.WEB_DEPLOY_PATH }}
         run: |
           rsync -avz --delete \
-            -e "ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
-            apps/web/dist/ \
-            "${SSH_USER}@${SSH_HOST}:${WEB_DEPLOY_PATH}/"
+          --exclude 'static/authors/***' \
+          -e "ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+          apps/web/dist/ \
+          "${SSH_USER}@${SSH_HOST}:${WEB_DEPLOY_PATH}/"
 
       - name: Pull repo and restart API
         env:
